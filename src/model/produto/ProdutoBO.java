@@ -5,6 +5,7 @@
  */
 package model.produto;
 
+import exception.ProdutoExistenteException;
 import java.sql.SQLException;
 import model.entidades.Produto;
 
@@ -20,9 +21,9 @@ public class ProdutoBO {
         dao = new ProdutoDAO();
     }
 
-    public void salvar(Produto p) throws SQLException{
+    public void salvar(Produto p) throws SQLException, ProdutoExistenteException{
         if (dao.buscarPeloCodigo(p.getCodigo()) != null) {
-            
+            throw new ProdutoExistenteException("Já existe produto cadastrado com mesmo código.");
         } else {
             dao.salvar(p);
         }

@@ -48,7 +48,7 @@ public class ProdutoDAO {
                     resultado.getDouble("preco"),
                     resultado.getString("codigo"),
                     resultado.getDouble("quantidade"),
-                    LocalDate.parse(resultado.getString("validade"))
+                    LocalDate.parse(resultado.getDate("validade").toString())
             );
 
             return p;

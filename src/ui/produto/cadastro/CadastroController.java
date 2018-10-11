@@ -8,11 +8,10 @@ package ui.produto.cadastro;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import exception.ProdutoExistenteException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -71,19 +70,32 @@ public class CadastroController implements Initializable {
             limpaCampos();
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setTitle("Sucesso");
+            a.setHeaderText(null);
             a.setContentText("Produto salvo com sucesso.");
             a.showAndWait();
         } catch (SQLException ex) {
-            Logger.getLogger(CadastroController.class.getName()).log(Level.SEVERE, null, ex);
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("ERRO");
+            a.setHeaderText(null);
+            a.setContentText(ex.getMessage());
+            a.showAndWait();
+        } catch (ProdutoExistenteException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("ERRO");
+            a.setHeaderText(null);
+            a.setContentText("Erro ao conectar-se ao banco de dados.");
+            a.showAndWait();
         }
     }
-    private void limpaCampos(){
+
+    private void limpaCampos() {
         nome.clear();
         preco.clear();
         codigo.clear();
         quantidade.clear();
         validade.setValue(null);
     }
+
     @FXML
     private void editar(ActionEvent event) {
     }
